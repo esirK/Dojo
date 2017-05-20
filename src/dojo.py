@@ -1,6 +1,7 @@
 from src.Exceptions.invalid_person import InvalidPersonType
 from src.Exceptions.user_exist import UserAlreadyExist
 from src.persons import Staff, Fellow
+from src.rooms import Office, LivingSpace
 
 
 class Dojo(object):
@@ -8,6 +9,14 @@ class Dojo(object):
         self.list_of_staffs = []
         self.list_of_fellows = []
         self.staffs_and_fellows = []
+        self.list_of_offices = []
+        self.list_of_living_space = []
+
+    def create_room(self, room_name, room_type):
+        if room_type.lower() == "office":
+            self.list_of_offices.append(Office(room_name))
+        elif room_type.lower() == "livingspace":
+            self.list_of_living_space.append(LivingSpace(room_name))
 
     def add_person(self, person_name, person_type, person_id, wants_accomm="N"):
         """
