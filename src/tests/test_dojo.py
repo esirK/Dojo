@@ -1,4 +1,6 @@
 import unittest
+
+from src.Exceptions.invalid_person import InvalidPersonType
 from src.dojo import Dojo
 
 
@@ -18,6 +20,11 @@ class TestDojo(unittest.TestCase):
 
     def test_person_with_same_id_not_added(self):
         self.dojo.add_person("Ngaruiya", "Fellow", "001", "Y")
+
+    def test_invalid_person_type_raises_invalid_type_exception(self):
+        with self.assertRaises(InvalidPersonType, msg="Invalid Person Type"):
+            self.dojo.add_person("Kamaku", "Security", "030")
+
 
 if __name__ == '__main__':
     unittest.main()
