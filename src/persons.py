@@ -12,8 +12,7 @@ class Fellow(Person):
     """
     Class Fellow defines a person who can be given an accommodation in the dojo
     """
-    def __init__(self, name, person_id, wants_accommodation="N"
-                                                            ""):
+    def __init__(self, name, person_id, wants_accommodation="N"):
         super(Fellow, self).__init__(name, "Fellow", person_id)
         self.wants_accommodation = wants_accommodation
 
