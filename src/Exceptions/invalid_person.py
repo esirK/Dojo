@@ -1,0 +1,2 @@
+class InvalidPersonType(Exception):
+    pass
