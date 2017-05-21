@@ -3,6 +3,10 @@ from src.Exceptions.room_exceptions import OfficeFull, LivingSpaceFull, NoRoomAv
 from src.Exceptions.user_exist import UserAlreadyExist
 from src.persons import Staff, Fellow
 from src.rooms import Office, LivingSpace
+import colorama
+from termcolor import colored
+
+colorama.init()
 
 
 class Dojo(object):
@@ -17,19 +21,15 @@ class Dojo(object):
 
     def create_room(self, room_name, room_type):
         if room_type.lower() == "office":
-            if len(self.list_of_offices) > 6:
-                raise OfficeFull
-            else:
-                self.list_of_offices.append(Office(room_name))
-                self.available_offices.append(Office(room_name))
-                print("Office " + room_name + " Added Successfully into The Dojo")
+            self.list_of_offices.append(Office(room_name))
+            self.available_offices.append(Office(room_name))
+            print()
+            print(colored("Office " + room_name + " Added Successfully into The Dojo", 'green'))
         elif room_type.lower() == "livingspace":
-            if len(self.list_of_living_space) > 4:
-                raise LivingSpaceFull
-            else:
-                self.available_living_space.append(LivingSpace(room_name))
-                self.list_of_living_space.append(LivingSpace(room_name))
-                print("Living Space "+room_name+" Added Successfully into The Dojo")
+            self.available_living_space.append(LivingSpace(room_name))
+            self.list_of_living_space.append(LivingSpace(room_name))
+            print(colored("Living Space " + room_name
+                          + " Added Successfully into The Dojo", 'green'))
 
     def add_person(self, person_name, person_type, person_id, wants_accomm="N"):
         """
@@ -46,6 +46,7 @@ class Dojo(object):
             elif person_type.lower() == "fellow":
                 person = Fellow(person_name, person_id, wants_accomm)
                 self.list_of_fellows.append(person)
+                self.allocate_random_room(person)
                 self.staffs_and_fellows.append(person.person_id)
             else:
                 raise InvalidPersonType
@@ -56,8 +57,11 @@ class Dojo(object):
             if len(self.available_living_space) > 0:  # Living space(s) available
                 # Pick a random room from list of available rooms
                 room = (randint(0, len(self.available_living_space)))
-                random_room = self.available_living_space[room]
+                random_room = self.available_living_space[room - 1]
                 random_room.add_fellow(person)
+                print(colored(person.name + " Added Successfully "
+                                            "into Living Space " +
+                              random_room.name, 'green'))
                 # Check if room is full and if so remove it from list of
                 # available rooms
                 if random_room.get_allocated_space() == random_room.capacity:
