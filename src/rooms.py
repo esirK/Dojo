@@ -14,7 +14,7 @@ class Office(Room):
         self.__persons = []
 
     def add_person(self, person):
-        if len(self.__persons) > 6:
+        if len(self.__persons) == 6:
             raise OfficeFull
         else:
             self.__persons.append(person)
@@ -30,7 +30,15 @@ class LivingSpace(Room):
         self.__fellows = []
 
     def add_fellow(self, fellow):
-        if len(self.__fellows) > 4:
+        if len(self.__fellows) == 4:
             raise LivingSpaceFull
         else:
             self.__fellows.append(fellow)
+
+    def get_allocated_space(self):
+        # Return how many people have been allocated into this room
+        return len(self.__fellows)
+
+    def get_all_fellows(self):
+        # returns all fellows allocated in this room
+        return self.__fellows
